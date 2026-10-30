@@ -1,0 +1,320 @@
+cff-version: "1.2.0"
+message: If you use this app, please cite it and the works it builds on, listed under references.
+type: software
+title: Spatial Cell-Cell Communication
+abstract: Infers ligand-receptor communication between labelled cell types, domains or niches in spatial
+  transcriptomics data with LIANA+. Per sample it ranks every ligand-receptor pair of LIANA's consensus
+  resource for every source and target label with five methods aggregated into magnitude and specificity
+  ranks, builds a consensus across samples, and on the top pairs computes spatially informed scores (global
+  bivariate Moran's R and a local cosine score per observation) with permutation p-values, tables and figures.
+authors:
+- name: Pennsieve (University of Pennsylvania)
+repository-code: https://github.com/pennsieve-apps/st-ccc
+license: Apache-2.0
+keywords:
+- spatial-transcriptomics
+- cell-cell-communication
+- ligand-receptor
+- liana
+- xenium
+- single-cell
+references:
+- type: article
+  title: 'LIANA+ provides an all-in-one framework for cell–cell communication inference'
+  authors:
+  - family-names: 'Dimitrov'
+    given-names: 'Daniel'
+  - family-names: 'Schäfer'
+    given-names: 'Philipp Sven Lars'
+  - family-names: 'Farr'
+    given-names: 'Elias'
+  - family-names: 'Rodriguez-Mier'
+    given-names: 'Pablo'
+  - family-names: 'Lobentanzer'
+    given-names: 'Sebastian'
+  - family-names: 'Badia-i-Mompel'
+    given-names: 'Pau'
+  - family-names: 'Dugourd'
+    given-names: 'Aurelien'
+  - family-names: 'Tanevski'
+    given-names: 'Jovan'
+  - family-names: 'Ramirez Flores'
+    given-names: 'Ricardo Omar'
+  - family-names: 'Saez-Rodriguez'
+    given-names: 'Julio'
+  journal: 'Nature Cell Biology'
+  year: 2024
+  volume: '26'
+  issue: '9'
+  start: '1613'
+  end: '1622'
+  doi: 10.1038/s41556-024-01469-w
+  identifiers:
+  - type: other
+    value: 'pmid:39223377'
+    description: PubMed ID
+- type: article
+  title: 'Comparison of methods and resources for cell-cell communication inference from single-cell RNA-Seq data'
+  authors:
+  - family-names: 'Dimitrov'
+    given-names: 'Daniel'
+  - family-names: 'Türei'
+    given-names: 'Dénes'
+  - family-names: 'Garrido-Rodriguez'
+    given-names: 'Martin'
+  - family-names: 'Burmedi'
+    given-names: 'Paul L.'
+  - family-names: 'Nagai'
+    given-names: 'James S.'
+  - family-names: 'Boys'
+    given-names: 'Charlotte'
+  - family-names: 'Ramirez Flores'
+    given-names: 'Ricardo O.'
+  - family-names: 'Kim'
+    given-names: 'Hyojin'
+  - family-names: 'Szalai'
+    given-names: 'Bence'
+  - family-names: 'Costa'
+    given-names: 'Ivan G.'
+  - family-names: 'Valdeolivas'
+    given-names: 'Alberto'
+  - family-names: 'Dugourd'
+    given-names: 'Aurélien'
+  - family-names: 'Saez-Rodriguez'
+    given-names: 'Julio'
+  journal: 'Nature Communications'
+  year: 2022
+  volume: '13'
+  issue: '1'
+  start: '3224'
+  doi: 10.1038/s41467-022-30755-0
+  identifiers:
+  - type: other
+    value: 'pmid:35680885'
+    description: PubMed ID
+- type: article
+  title: 'Robust rank aggregation for gene list integration and meta-analysis'
+  authors:
+  - family-names: 'Kolde'
+    given-names: 'Raivo'
+  - family-names: 'Laur'
+    given-names: 'Sven'
+  - family-names: 'Adler'
+    given-names: 'Priit'
+  - family-names: 'Vilo'
+    given-names: 'Jaak'
+  journal: 'Bioinformatics'
+  year: 2012
+  volume: '28'
+  issue: '4'
+  start: '573'
+  end: '580'
+  doi: 10.1093/bioinformatics/btr709
+  identifiers:
+  - type: other
+    value: 'pmid:22247279'
+    description: PubMed ID
+- type: article
+  title: 'CellPhoneDB: inferring cell–cell communication from combined expression of multi-subunit ligand–receptor complexes'
+  authors:
+  - family-names: 'Efremova'
+    given-names: 'Mirjana'
+  - family-names: 'Vento-Tormo'
+    given-names: 'Miquel'
+  - family-names: 'Teichmann'
+    given-names: 'Sarah A.'
+  - family-names: 'Vento-Tormo'
+    given-names: 'Roser'
+  journal: 'Nature Protocols'
+  year: 2020
+  volume: '15'
+  issue: '4'
+  start: '1484'
+  end: '1506'
+  doi: 10.1038/s41596-020-0292-x
+  identifiers:
+  - type: other
+    value: 'pmid:32103204'
+    description: PubMed ID
+- type: article
+  title: 'Computation and visualization of cell–cell signaling topologies in single-cell systems data using Connectome'
+  authors:
+  - family-names: 'Raredon'
+    given-names: 'Micha Sam Brickman'
+  - family-names: 'Yang'
+    given-names: 'Junchen'
+  - family-names: 'Garritano'
+    given-names: 'James'
+  - family-names: 'Wang'
+    given-names: 'Meng'
+  - family-names: 'Kushnir'
+    given-names: 'Dan'
+  - family-names: 'Schupp'
+    given-names: 'Jonas Christian'
+  - family-names: 'Adams'
+    given-names: 'Taylor S.'
+  - family-names: 'Greaney'
+    given-names: 'Allison M.'
+  - family-names: 'Leiby'
+    given-names: 'Katherine L.'
+  - family-names: 'Kaminski'
+    given-names: 'Naftali'
+  - family-names: 'Kluger'
+    given-names: 'Yuval'
+  - family-names: 'Levchenko'
+    given-names: 'Andre'
+  - family-names: 'Niklason'
+    given-names: 'Laura E.'
+  journal: 'Scientific Reports'
+  year: 2022
+  volume: '12'
+  issue: '1'
+  start: '4187'
+  doi: 10.1038/s41598-022-07959-x
+  identifiers:
+  - type: other
+    value: 'pmid:35264704'
+    description: PubMed ID
+- type: article
+  title: 'Predicting cell-to-cell communication networks using NATMI'
+  authors:
+  - family-names: 'Hou'
+    given-names: 'Rui'
+  - family-names: 'Denisenko'
+    given-names: 'Elena'
+  - family-names: 'Ong'
+    given-names: 'Huan Ting'
+  - family-names: 'Ramilowski'
+    given-names: 'Jordan A.'
+  - family-names: 'Forrest'
+    given-names: 'Alistair R. R.'
+  journal: 'Nature Communications'
+  year: 2020
+  volume: '11'
+  issue: '1'
+  start: '5011'
+  doi: 10.1038/s41467-020-18873-z
+  identifiers:
+  - type: other
+    value: 'pmid:33024107'
+    description: PubMed ID
+- type: article
+  title: 'SingleCellSignalR: inference of intercellular networks from single-cell transcriptomics'
+  authors:
+  - family-names: 'Cabello-Aguilar'
+    given-names: 'Simon'
+  - family-names: 'Alame'
+    given-names: 'Mélissa'
+  - family-names: 'Kon-Sun-Tack'
+    given-names: 'Fabien'
+  - family-names: 'Fau'
+    given-names: 'Caroline'
+  - family-names: 'Lacroix'
+    given-names: 'Matthieu'
+  - family-names: 'Colinge'
+    given-names: 'Jacques'
+  journal: 'Nucleic Acids Research'
+  year: 2020
+  volume: '48'
+  issue: '10'
+  start: 'e55'
+  end: 'e55'
+  doi: 10.1093/nar/gkaa183
+  identifiers:
+  - type: other
+    value: 'pmid:32196115'
+    description: PubMed ID
+- type: article
+  title: 'Notes on Continuous Stochastic Phenomena'
+  authors:
+  - family-names: 'Moran'
+    given-names: 'P. A. P.'
+  journal: 'Biometrika'
+  year: 1950
+  volume: '37'
+  issue: '1-2'
+  start: '17'
+  end: '23'
+  doi: 10.1093/biomet/37.1-2.17
+- type: article
+  title: 'SCANPY: large-scale single-cell gene expression data analysis'
+  authors:
+  - family-names: 'Wolf'
+    given-names: 'F. Alexander'
+  - family-names: 'Angerer'
+    given-names: 'Philipp'
+  - family-names: 'Theis'
+    given-names: 'Fabian J.'
+  journal: 'Genome Biology'
+  year: 2018
+  volume: '19'
+  issue: '1'
+  start: '15'
+  doi: 10.1186/s13059-017-1382-0
+  identifiers:
+  - type: other
+    value: 'pmid:29409532'
+    description: PubMed ID
+- type: article
+  title: 'anndata: Access and store annotated data matrices'
+  authors:
+  - family-names: 'Virshup'
+    given-names: 'Isaac'
+  - family-names: 'Rybakov'
+    given-names: 'Sergei'
+  - family-names: 'Theis'
+    given-names: 'Fabian J.'
+  - family-names: 'Angerer'
+    given-names: 'Philipp'
+  - family-names: 'Wolf'
+    given-names: 'F. Alexander'
+  journal: 'Journal of Open Source Software'
+  year: 2024
+  volume: '9'
+  issue: '101'
+  start: '4371'
+  doi: 10.21105/joss.04371
+- type: article
+  title: 'High resolution mapping of the tumor microenvironment using integrated single-cell, spatial and in situ analysis'
+  authors:
+  - family-names: 'Janesick'
+    given-names: 'Amanda'
+  - family-names: 'Shelansky'
+    given-names: 'Robert'
+  - family-names: 'Gottscho'
+    given-names: 'Andrew D.'
+  - family-names: 'Wagner'
+    given-names: 'Florian'
+  - family-names: 'Williams'
+    given-names: 'Stephen R.'
+  - family-names: 'Rouault'
+    given-names: 'Morgane'
+  - family-names: 'Beliakoff'
+    given-names: 'Ghezal'
+  - family-names: 'Morrison'
+    given-names: 'Carolyn A.'
+  - family-names: 'Oliveira'
+    given-names: 'Michelli F.'
+  - family-names: 'Sicherman'
+    given-names: 'Jordan T.'
+  - family-names: 'Kohlway'
+    given-names: 'Andrew'
+  - family-names: 'Abousoud'
+    given-names: 'Jawad'
+  - family-names: 'Drennon'
+    given-names: 'Tingsheng Yu'
+  - family-names: 'Mohabbat'
+    given-names: 'Seayar H.'
+  - name: '10x Development Teams'
+  - family-names: 'Taylor'
+    given-names: 'Sarah E. B.'
+  journal: 'Nature Communications'
+  year: 2023
+  volume: '14'
+  issue: '1'
+  start: '8353'
+  doi: 10.1038/s41467-023-43458-x
+  identifiers:
+  - type: other
+    value: 'pmid:38114474'
+    description: PubMed ID

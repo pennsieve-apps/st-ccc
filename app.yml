@@ -1,0 +1,159 @@
+# yaml-language-server: $schema=https://schemas.pennsieve.io/app-manifest/v1.json
+schemaVersion: "1.0"
+application:
+  name: Spatial Cell-Cell Communication
+  description: >-
+    Infers ligand-receptor communication between labelled cell types, domains or niches in
+    spatial transcriptomics data with LIANA+ (Dimitrov et al. 2024). Per sample it scores every
+    ligand-receptor pair of LIANA's consensus resource (human, or mouseconsensus for mouse symbols)
+    for every source -> target label pair with CellPhoneDB, Connectome, log2FC, NATMI,
+    and SingleCellSignalR scores aggregated into magnitude and specificity ranks,
+    builds a consensus across samples, and, on the top pairs, computes spatially informed scores
+    (local cosine co-expression in each observation's neighbourhood and the global bivariate
+    Moran's R) with permutation p-values. Works on cells (Xenium, MERSCOPE, CosMx) and on Visium
+    spots with st-domains' domain labels or cell2location's dominant_type labels. All outputs go
+    under a folder named after LABEL, so several runs can feed one report.
+  type: processor
+  tags:
+    - spatial-transcriptomics
+    - transcriptomics
+    - genomics
+    - single-cell
+    - xenium
+    - merscope
+    - cosmx
+    - visium
+    - cell-cell-communication
+    - ligand-receptor
+runtime:
+  cpu: 2048
+  memory: 8192
+  # Measured in the linux/amd64 image under emulation on an M-series Mac: see README "Runtime".
+  computeTypes:
+    - standard
+  timeoutSeconds: 10800
+parameters:
+  - name: LABEL
+    type: string
+    description: >-
+      Name of this run (lowercase letters, digits, '-'); every output is written under
+      OUTPUT_DIR/<LABEL>/ so runs on different label columns can share one report input. Empty: the
+      LABEL_COLUMN with '_' as '-' (cell_type -> cell-type). Anything else fails the run (exit 2).
+    defaultValue: ""
+  - name: LABEL_COLUMN
+    type: string
+    description: >-
+      Column of labels.csv whose labels are the communicating groups: cell_type or cluster
+      (st-celltype), domain (st-domains), dominant_type (cell2location), niche (st-niches).
+    defaultValue: "cell_type"
+  - name: RESOURCE
+    type: string
+    description: >-
+      LIANA ligand-receptor resource: auto picks consensus for human gene symbols (CXCL12) and
+      mouseconsensus for mouse symbols (Cxcl12); or any resource LIANA ships (consensus,
+      mouseconsensus, cellphonedb, cellchatdb, connectomedb2020, ...). Bundled in the image.
+    defaultValue: "auto"
+  - name: N_PERMS
+    type: integer
+    description: >-
+      Permutations (label shuffles) for the CellPhoneDB p-values that feed the specificity rank,
+      and (observation shuffles) for the local and global spatial p-values; the smallest p-value
+      reported is 0, meaning below 1/N_PERMS.
+    defaultValue: 100
+    min: 1
+  - name: EXPR_PROP
+    type: number
+    description: >-
+      Minimum fraction of a label's observations expressing the ligand (and receptor, every complex
+      subunit) for an interaction to be scored for that source/target pair.
+    defaultValue: 0.1
+    min: 0
+    max: 1
+  - name: MIN_OBS_PER_LABEL
+    type: integer
+    description: Labels with fewer observations in a sample are skipped for that sample.
+    defaultValue: 20
+    min: 1
+  - name: TOP_N
+    type: integer
+    description: Interactions per sample (by magnitude rank) shown in the dot plot and counted in the consensus.
+    defaultValue: 20
+    min: 1
+  - name: SPATIAL
+    type: boolean
+    description: Compute the spatially informed scores (local cosine, global Moran's R) on the top pairs.
+    defaultValue: true
+  - name: TOP_N_SPATIAL
+    type: integer
+    description: >-
+      Ligand-receptor pairs per sample (by best magnitude rank) that get spatial scores; 0 scores
+      every pair of the resource present in the data.
+    defaultValue: 50
+    min: 0
+  - name: BANDWIDTH
+    type: number
+    description: >-
+      Bandwidth of the Gaussian spatial kernel, in spot / cell diameters (uns.pennsieve.spot_diameter):
+      3 x ~10 um for Xenium cells, 3 spots for Visium.
+    defaultValue: 3.0
+  - name: CUTOFF
+    type: number
+    description: Kernel weights below this are dropped (limits each observation's neighbourhood).
+    defaultValue: 0.1
+    min: 0
+    max: 1
+  - name: MAX_PLOTS
+    type: integer
+    description: Local score maps per sample, for the pairs with the highest global Moran's R.
+    defaultValue: 6
+    min: 0
+  - name: SEED
+    type: integer
+    description: Seed for the permutations.
+    defaultValue: 42
+  - name: THREADS
+    type: integer
+    description: Threads for BLAS / numba / LIANA (0 = the container's CPU quota).
+    defaultValue: 0
+    min: 0
+# Each input in its own folder (placement: subfolder) when linked; without links the files are
+# found by name anywhere under INPUT_DIR.
+inputs:
+  - name: spatial
+    description: >-
+      <sample_id>.h5ad, one per sample, as written by st-qc (log-normalized X, obsm['spatial'],
+      uns['pennsieve'] with spot_diameter). st-prep output (raw counts) is normalized on the fly.
+    formats:
+      - format_3590
+    placement: subfolder
+    required: true
+  - name: labels
+    description: >-
+      labels.csv (sample_id, obs_id, one or more label columns) from st-celltype, st-domains,
+      st-niches or cell2location; LABEL_COLUMN names the column to use.
+    mediaTypes:
+      - text/csv
+    placement: subfolder
+    required: true
+  - name: metadata
+    description: st-prep's samples.csv (sample_id, path, platform, kind, n_obs, ... condition) and prep.json.
+    mediaTypes:
+      - text/csv
+      - application/json
+    placement: subfolder
+    required: true
+# One output: the whole of OUTPUT_DIR; the app writes into OUTPUT_DIR/<LABEL>/.
+outputs:
+  - name: ccc
+    description: >-
+      <LABEL>/lr_cluster.csv (sample_id, source, target, ligand_complex, receptor_complex,
+      magnitude_rank, specificity_rank, method scores, rank), <LABEL>/lr_consensus.csv (across
+      samples: n_samples, n_samples_top, mean ranks), <LABEL>/lr_spatial.csv (sample_id, ligand,
+      receptor, global_morans, global_pval, n_obs_positive, ...), <LABEL>/source_target_summary.csv
+      (sample_id, source, target, n_interactions, n_interactions_top, n_specific, ...),
+      <LABEL>/summary.json, <LABEL>/<sample_id>_dotplot.png, <LABEL>/<sample_id>_source_target.png,
+      <LABEL>/<sample_id>_local_<ligand>_<receptor>.png, <LABEL>/provenance.json.
+    mediaTypes:
+      - text/csv
+      - application/json
+      - image/png
