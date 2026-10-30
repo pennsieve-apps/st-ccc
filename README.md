@@ -148,11 +148,49 @@ label (9 cells) is skipped; mouse symbols select `mouseconsensus` and find `Cxcl
 
 ### Xenium FFPE human breast cancer
 
-RESULTS_XENIUM
+st-qc output of both replicates at full size (breast_rep1 160,674 cells, breast_rep2 116,801;
+313-gene panel, of which 23 consensus interactions are covered) with st-celltype's `cell_type`
+(8 types, all above `MIN_OBS_PER_LABEL`), defaults: 559 and 584 interactions scored, 609 in the
+consensus, 534 of them in both replicates. The consensus top is **CXCL12 → CXCR4** from
+fibroblasts to B cells and to T cells (mean `magnitude_rank` 3e-5 and 2e-4, top-20 in 2/2), then
+T cell → Epithelial S100A4 → ERBB2, endothelial/plasma/B cell → B cell CXCL12 → CXCR4 and
+Fibroblast → Macrophage CXCL12 → CD4. Spatially (kernel bandwidth 40 µm = 3 × the 13.4 µm cell
+diameter st-prep recorded), CXCL12 → CXCR4 has the highest global Moran's R in both replicates
+(0.237 / 0.208, p < 0.01; 21,118 / 22,497 cells with a significant local score), followed by
+CXCL12 → CD4 (0.218 / 0.198), MRC1 → PTPRC (0.115 / 0.103), MMP2 → PECAM1 and MMRN2 → CD93 /
+CLEC14A (endothelial); 11 and 10 pairs have R > 0 with p ≤ 0.05. The local maps show CXCL12 →
+CXCR4 co-expression in the stroma and immune infiltrates around the tumour ducts, not inside
+them. S100A4 → ERBB2 ranks high by expression but is spatially anti-correlated (R −0.34 in
+rep1, −0.31 in rep2): S100A4-high and ERBB2-high cells sit apart, so the expression-based rank
+alone would overstate it. On the 20 k-cell subsamples (`xenium-20k`, 7 cell types pass
+`MIN_OBS_PER_LABEL`) the consensus top three are Fibroblast → T cell CXCL12 → CXCR4,
+T cell → Epithelial S100A4 → ERBB2 and Fibroblast → Macrophage CXCL12 → CD4, and the spatial
+R values agree with the full data within 0.03.
+
+Outputs: `workflow-spatial-transcriptomics/data/work/xenium/ccc/cell-type/` and
+`.../xenium-20k/ccc/cell-type/`.
 
 ## Runtime
 
-RUNTIME_SECTION
+`computeTypes: [standard]`, 2 vCPU / 6 GiB, 2 h timeout.
+
+Measured in the linux/amd64 image under emulation on an M-series Mac (Docker, `--memory 3g
+--cpus 2 --network none`), defaults:
+
+| Data | Observations | Peak RSS | Wall time (processing) |
+|---|---|---|---|
+| Xenium breast, both replicates, full | 160,674 + 116,801 cells, 8 cell types | **2.3 GB** | **88 s** (cluster 13 s, spatial 63 s, figures 5 s); ~54 s for rep1 |
+| Xenium breast, 20 k subsamples | 19,189 + 19,669 | 0.8 GB | 29 s |
+| Synthetic, 2 × 168 k cells, 4 types | 336,182 | 1.7 GB | 109 s |
+| Visium lymph node (whole transcriptome), 6 k-means domains | 3,928 spots, 3,544 pairs, 45,720 interactions | 2.2 GB | 55 s |
+
+Samples are processed one at a time, so memory follows the largest sample, not the cohort. Peak
+memory comes from LIANA's dense per-label matrices (genes in the resource × observations) and
+the spatial kernel graph (≤ 100 neighbours per observation, ~200 MB at 160 k cells). The cgroup's
+`memory.peak` also counts page cache of the files read (reclaimable). 6 GiB leaves ~2.5×
+headroom over the largest measurement; a 500 k-cell Xenium slide or a whole-transcriptome Visium
+HD 8 µm sample is expected to need ~8–16 GiB (raise `memory`, or lower `TOP_N_SPATIAL` /
+`N_PERMS`). Time grows with observations × `N_PERMS` × spatial pairs. Image: 302 MB.
 
 ## Running it locally
 
