@@ -27,11 +27,11 @@ application:
     - ligand-receptor
 runtime:
   cpu: 2048
-  memory: 8192
+  memory: 6144
   # Measured in the linux/amd64 image under emulation on an M-series Mac: see README "Runtime".
   computeTypes:
     - standard
-  timeoutSeconds: 10800
+  timeoutSeconds: 7200
 parameters:
   - name: LABEL
     type: string

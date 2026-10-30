@@ -138,7 +138,11 @@ def local_map(adata, scores: np.ndarray, sample_id: str, ligand: str, receptor: 
         cmap, norm = SEQUENTIAL_LOCAL, Normalize(0.0, vmax)
     else:
         cmap, norm = DIVERGING, TwoSlopeNorm(0.0, -vmax, vmax)
-    sc = ax.scatter(x[order], y[order], c=scores[order], cmap=cmap, norm=norm, s=size, linewidths=0, zorder=2,
+    zero = scores[order] == 0                                # masked / no co-expression: faint grey
+    ax.scatter(x[order][zero], y[order][zero], c="#bdbdbd", alpha=0.35, s=size, linewidths=0, zorder=1,
+               rasterized=True)
+    keep = order[~zero]
+    sc = ax.scatter(x[keep], y[keep], c=scores[keep], cmap=cmap, norm=norm, s=size, linewidths=0, zorder=2,
                     rasterized=True)
     if img is None:
         ax.invert_yaxis()

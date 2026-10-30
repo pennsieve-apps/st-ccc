@@ -38,8 +38,9 @@ input, so **everything is written under `OUTPUT_DIR/<LABEL>/`**.
 2. **Resource.** `RESOURCE=auto` picks LIANA's `consensus` resource (human) or
    `mouseconsensus` when most gene symbols look like mouse symbols (`Cxcl12`, not `CXCL12`).
    It is restricted to the pairs whose ligand and receptor genes (every subunit of a complex such
-   as `TGFBR1_TGFBR2`) are in the data, which matters for targeted panels (Xenium's 313-gene breast
-   panel covers a few hundred of the 4,620 consensus interactions). The resource ships inside the
+   as `TGFBR1_TGFBR2`) are in the data, which matters for targeted panels: Xenium's 313-gene breast
+   panel covers only 23 of the 4,620 consensus interactions (a whole-transcriptome Visium sample,
+   3,544). The resource ships inside the
    `liana` package; nothing is downloaded.
 3. **Cluster-level inference** (`liana.mt.rank_aggregate`, `expr_prop=EXPR_PROP`,
    `min_cells=MIN_OBS_PER_LABEL`, `n_perms=N_PERMS`, `seed=SEED`). For every source → target
