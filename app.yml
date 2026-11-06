@@ -123,6 +123,8 @@ inputs:
     description: >-
       <sample_id>.h5ad, one per sample, as written by st-qc (log-normalized X, obsm['spatial'],
       uns['pennsieve'] with spot_diameter). st-prep output (raw counts) is normalized on the fly.
+    mediaTypes:
+      - "application/x-hdf5; profile=anndata"
     formats:
       - format_3590
     placement: subfolder
