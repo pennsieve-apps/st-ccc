@@ -1,5 +1,6 @@
 cff-version: "1.2.0"
-message: If you use this app, please cite it and the works it builds on, listed under references.
+message: >-
+  If you use this app, please cite the work it implements (preferred-citation), this release, and Pennsieve (RRID:SCR_021677); the other works it builds on are listed under references.
 type: software
 title: Spatial Cell-Cell Communication
 abstract: Infers ligand-receptor communication between labelled cell types, domains or niches in spatial
@@ -18,6 +19,42 @@ keywords:
 - liana
 - xenium
 - single-cell
+# The work this app implements; the release report's "How to cite" puts it first.
+preferred-citation:
+  type: article
+  title: LIANA+ provides an all-in-one framework for cell–cell communication inference
+  authors:
+  - family-names: Dimitrov
+    given-names: Daniel
+  - family-names: Schäfer
+    given-names: Philipp Sven Lars
+  - family-names: Farr
+    given-names: Elias
+  - family-names: Rodriguez-Mier
+    given-names: Pablo
+  - family-names: Lobentanzer
+    given-names: Sebastian
+  - family-names: Badia-i-Mompel
+    given-names: Pau
+  - family-names: Dugourd
+    given-names: Aurelien
+  - family-names: Tanevski
+    given-names: Jovan
+  - family-names: Ramirez Flores
+    given-names: Ricardo Omar
+  - family-names: Saez-Rodriguez
+    given-names: Julio
+  journal: Nature Cell Biology
+  year: 2024
+  volume: '26'
+  issue: '9'
+  start: '1613'
+  end: '1622'
+  doi: 10.1038/s41556-024-01469-w
+  identifiers:
+  - type: other
+    value: pmid:39223377
+    description: PubMed ID
 references:
 - type: article
   title: 'LIANA+ provides an all-in-one framework for cell–cell communication inference'
